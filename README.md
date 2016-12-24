@@ -4,6 +4,31 @@ Using Radio.co's FTP account, a Dropbox account and a server to put a podcast pl
 Radio.co have nothing to do with this application.
 
 
+#Instllation
+
+This software is created by Java. If you haven't this, please install before running this. https://java.com/download/ 
+
+1. Go to https://github.com/magesusu/podcast-creater-for-radio.co/releases
+
+2. Download the least version zip and extract it.
+
+3. Set all files in config folder. (Please look Settings section)
+
+4. Run run.bat (Windows) or run.sh (Mac or Linux).
+
+#Settings
+
+settings.txt	Set Radio.co's FTP account, local media folder and another FTP account to put a podcast playlist.
+
+podcast.txt	Set your podcast's show name.
+
+dropbox_conf.app	Set your API key to use dropbox service. You can get here https://www.dropbox.com/developers/apps
+
+header.xml and footer.xml	Set this for your station. KEEP IN MIND: After edit footer.xml, please delete the first two bytes by using binary editer. (Generally, you don't have to edit footer.xml) 
+
+dropbox_auth.auth	This file will be genelated by this software. You don't need to edit.
+
+
 #Reference Sites
 
 Apache2.0
