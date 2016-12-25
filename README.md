@@ -1,4 +1,4 @@
-#Podcast Creater For Radio.co
+#Podcast Creator For Radio.co
 
 Using Radio.co's FTP account, a Dropbox account and a server to put a podcast playlist, you are easy to create a podcast.
 Radio.co have nothing to do with this application.
@@ -8,13 +8,15 @@ Radio.co have nothing to do with this application.
 
 This software is created by Java. If you haven't this, please install before running this. https://java.com/download/ 
 
-1. Go to https://github.com/magesusu/podcast-creater-for-radio.co/releases
+1. Go to https://github.com/magesusu/Podcast-Creator-For-Radio.co/releases
 
 2. Download the least version zip and extract it.
 
 3. Set all files in config folder. (Please look Settings section)
 
 4. Run run.bat (Windows) or run.sh (Mac or Linux).
+
+More information can found https://github.com/magesusu/Podcast-Creator-For-Radio.co/wiki/Installation
 
 #Settings
 
