@@ -57,12 +57,12 @@ public class PodcastCreater {
             case "all":
                 runAll();
                 break;
-            case "media":
-                System.out.println("We will download media.");
-                break;
-            case "build":
-                System.out.println("We will build a podcast csv.");
-                break;
+//            case "media":
+//                System.out.println("We will download media.");
+//                break;
+//            case "build":
+//                System.out.println("We will build a podcast csv.");
+//                break;
             case "set":
             	System.out.println("Write Settings");
             	hostname = args[1];
@@ -80,9 +80,9 @@ public class PodcastCreater {
         }
     	System.out.println("");
     	System.out.println("Process completed!! Thank you for using.");
-    	
+
     }
-    
+
     private static void runAll() throws Exception {
         execute(hostname, username, password, usePassiveMode);
     	PodcastUpdate.update(csv,podcastOutputPass);
@@ -114,7 +114,7 @@ public class PodcastCreater {
 	}
     private static void saveSetting(){
     	Properties prop = new Properties();
-    	
+
     	prop.setProperty("hostname", hostname);
         prop.setProperty("username", username);
         prop.setProperty("password", password);
@@ -149,13 +149,13 @@ public class PodcastCreater {
               json.println("  \"secret\": \""+secret+"\"");
               json.println("}");
               json.close();
-              
+
           }catch(IOException e){
             e.printStackTrace();
           }
         System.out.println("Saved Dropbox settings.");
     }
-    
+
 	private static boolean execute(String address, String username,
             String password, boolean usePassiveMode) throws IOException{
         boolean success = false;
