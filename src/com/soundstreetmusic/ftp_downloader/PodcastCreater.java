@@ -1,10 +1,14 @@
 package com.soundstreetmusic.ftp_downloader;
 
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Properties;
 
 import org.apache.commons.net.ftp.FTP;
@@ -37,16 +41,51 @@ public class PodcastCreater {
     private static final boolean usePassiveMode = true;
 
 
-    public static void main(String[] arg) throws Exception {
+    public static void main(String[] args) throws Exception {
 
     	loadSetting();
     	csv = new File("temp/show.csv");
     	System.out.println("******** Podcast Creater For Radio.co ********");
-        execute(hostname, username, password, usePassiveMode);
 
-    	PodcastUpdate.update(csv,podcastOutputPass);
-    	
+    	if(args.length == 0){
+    		System.out.println("No Command Input. Run all mode.");
+            runAll();
+    	}else if(args[0] == null){
+            System.out.println("No Command Input. Run all mode.");
+            runAll();
+        }else switch(args[0]){
+            case "all":
+                runAll();
+                break;
+            case "media":
+                System.out.println("We will download media.");
+                break;
+            case "build":
+                System.out.println("We will build a podcast csv.");
+                break;
+            case "set":
+            	System.out.println("Write Settings");
+            	hostname = args[1];
+            	username = args[2];
+            	password = args[3];
+            	xHostname = args[6];
+            	xUserName = args[7];
+            	xPassword = args[8];
+            	podcastXmlUploadPass = args[9];
+            	saveSetting();
+            	saveJsonSetting(args[4],args[5]);
+            	break;
+            default:
+                System.out.println("Unknown Command");
+        }
+    	System.out.println("");
     	System.out.println("Process completed!! Thank you for using.");
+    	
+    }
+    
+    private static void runAll() throws Exception {
+        execute(hostname, username, password, usePassiveMode);
+    	PodcastUpdate.update(csv,podcastOutputPass);
     }
 
     private static void loadSetting() {
@@ -73,7 +112,50 @@ public class PodcastCreater {
         dropboxMediaDirectory = prop.getProperty("dropboxMediaDirectory");
 
 	}
+    private static void saveSetting(){
+    	Properties prop = new Properties();
+    	
+    	prop.setProperty("hostname", hostname);
+        prop.setProperty("username", username);
+        prop.setProperty("password", password);
+        prop.setProperty("portno", String.valueOf(portno));
+        prop.setProperty("localMediaFolder", localRootFolder);
+        prop.setProperty("podcastOutputPass", podcastOutputPass);
+        prop.setProperty("xdomainHostname", xHostname);
+        prop.setProperty("xdomainUsername", xUserName);
+        prop.setProperty("xdomainPassword", xPassword);
+        prop.setProperty("podcastXmlUploadPass", podcastXmlUploadPass);
+        prop.setProperty("dropboxMediaDirectory", dropboxMediaDirectory);
 
+        try {
+			prop.store(new FileOutputStream(configFile), "Edited By Lancher");
+		} catch (FileNotFoundException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+        System.out.println("Saved FTP settings.");
+    }
+
+    private static void saveJsonSetting(String key, String secret){
+        try{
+            File file = new File("config/dropbox_conf.app");
+
+              PrintWriter json = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+              json.println("{");
+              json.println("  \"key\": \""+key+"\",");
+              json.println("  \"secret\": \""+secret+"\"");
+              json.println("}");
+              json.close();
+              
+          }catch(IOException e){
+            e.printStackTrace();
+          }
+        System.out.println("Saved Dropbox settings.");
+    }
+    
 	private static boolean execute(String address, String username,
             String password, boolean usePassiveMode) throws IOException{
         boolean success = false;
